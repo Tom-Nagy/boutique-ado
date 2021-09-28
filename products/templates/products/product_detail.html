@@ -13,6 +13,7 @@
     <div class="overlay"></div>
     <div class="container-fluid">
         <div class="row">
+            <!-- Product image -->
             <div class="col-12 col-md-6 col-lg-4 offset-lg-2">
                 <div class="image-container my-5">
                     {% if product.image %}
@@ -26,9 +27,13 @@
                     {% endif %}
                 </div>
             </div>
+            <!-- Product details -->
             <div class="col-12 col-md-6 col-lg-4">
+                <!-- name -->
                 <p class="mb-o">{{ product.name }}</p>
+                <!-- price -->
                 <p class="lead mb-0 text-left font-weight-bold">${{ product.price }}</p>
+                <!-- category -->
                 {% if product.category %}
                     <p class="small mt-1 mb-0">
                         <a href="{% url 'products' %}?category={{ product.category.name }}" class="text-muted">
@@ -36,12 +41,42 @@
                         </a>
                     </p>
                 {% endif %}
+                <!-- rating -->
                 {% if product.rating %}
                     <small class="text-muted"><i class="fas fa-star mr-1"></i>{{ product.rating }} / 5</small>
                 {% else %}
                     <small class="text-muted">No Rating</small>
                 {% endif %}
+                <!-- description -->
                 <p class="mt-3">{{ product.description }}</p>
+
+                <!-- Form to add the product to the shopping bag -->
+                <form class="form" action="{% url 'add_to_bag' product.id %}" method="POST">
+                    <!-- token for cross site forgery protection -->
+                    {% csrf_token %}
+                    <div class="form_row">
+                        <!-- quantity -->
+                        <div class="col-12">
+                            <p class="mt-3"><strong>Quantity:</strong></p>
+                            <div class="form-group w-50">
+                                <input class="form-control qty_input" type="number" name="quantity" value="1" min="1" max="99" 
+                                    data-item_id="{{ product.id }}" id="id_qty_{{ product.id }}">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <!-- back to products page -->
+                            <a href="{% url 'products' %}" class="btn btn-outline-black rounded-0 mt-5">
+                                <span class="icon">
+                                    <i class="fas fa-chevron-left"></i>
+                                </span>
+                                <span class="text-uppercase">Keep shopping</span>
+                            </a>
+                            <!-- Add to bag -->
+                            <input type="submit" class="btn btn-black rounded-0 text-uppercase mt-5" value="Add to Bag">
+                        </div>
+                        <input type="hidden" name="redirect_url" value="{{ request.path }}">
+                    </div>
+                </form>
             </div>
         </div>
     </div>
