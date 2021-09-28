@@ -33,7 +33,7 @@ def bag_contents(request):
                 product_count += quantity
                 bag_items.append({
                     'item_id': item_id,
-                    'quantity': item_data['items_by_size'][size],
+                    'quantity': quantity,  # or item_data['items_by_size'][size]
                     'product': product,
                     'subtotal': subtotal,
                     'size': size,
