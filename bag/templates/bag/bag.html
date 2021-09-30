@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load bag_tools %}
 
 {% block page_header %}
     <div class="container header-container">
@@ -55,7 +56,7 @@
                                         <p class="my-0">${{ item.product.price }}</p>
                                     </td>
                                     <td class="p-3 w-25">
-                                        <form class="form update-form" action="" method="POST">
+                                        <form class="form update-form" action="{% url 'adjust_bag' item.item_id %}" method="POST">
                                             {% csrf_token %}
                                             <!-- Update Quantity -->
                                             <div class="form-group">
@@ -89,12 +90,16 @@
                                             </div>
                                         </form>
                                         <a class="update-link text-info"><small>Update</small></a>
-                                        <a class="remove-item text-danger float-right" id="remove_{{ item.item_id }}" data-size="{{ item.size }}">
+                                        <a class="remove-item text-danger float-right" id="remove_{{ item.item_id }}" 
+                                            data-product_size="{{ item.size }}">
                                             <small>Remove</small>
                                         </a>
                                     </td>
                                     <td class="p-3">
+                                        <!-- calc by adding a subtotal template var in the contexts -->
                                         <p class="my-0">${{ item.subtotal }}</p>
+                                        <!-- calc by using templatetags, filter and load the fiel from bag_tools -->
+                                        <p class="my-0">${{ item.product.price | calc_subtotal:item.quantity }}</p>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -157,9 +162,9 @@
         $('.remove-item').click(function(e) {
             let csrfToken = "{{ csrf_token }}";
             let itemId = $(this).attr('id').split('remove_')[1]; // to get the second part of the split
-            let size = $(this).data('size');
-            let url = `/bag/remove/${itemId}`;
-            let data = {'csrfmiddlewaretoken': csrfToken, 'size': size};
+            let size = $(this).data('product_size');
+            let url = `/bag/remove/${itemId}/`;
+            let data = {'csrfmiddlewaretoken': csrfToken, 'product_size': size};
 
             $.post(url, data)
                 .done(function() {

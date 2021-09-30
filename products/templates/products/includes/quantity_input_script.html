@@ -18,6 +18,7 @@
     // Listen to changes on the input box to enable/disable buttons
     $('.qty_input').change(function() {
         let itemId = $(this).data('item_id');
+        console.log($(this))
         handleEnableDisable(itemId);
     })
 
