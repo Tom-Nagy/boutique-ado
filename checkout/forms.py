@@ -5,18 +5,18 @@ from .models import Order
 class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ('full_name', 'email','phone_number',
+        fields = ('full_name', 'email', 'phone_number',
                   'street_address1', 'street_address2',
                   'town_or_city', 'postcode', 'country',
-                  'county')
+                  'county',)
 
-    def __init__(self, *args, *kwargs):
+    def __init__(self, *args, **kwargs):
         '''
         Add placeholders and classes, remove auto-generated labels
-        and set autofocus on hte first field
+        and set autofocus on the first field
         '''
         super().__init__(*args, **kwargs)
-        # for better ux/ui intead of empty boxes and clunky labels
+        # for better ux/ui instead of empty boxes and clunky labels
         placeholders = {
             'full_name': 'Full Name',
             'email': 'Email Address',
@@ -24,15 +24,15 @@ class OrderForm(forms.ModelForm):
             'country': 'Country',
             'postcode': 'Postal Code',
             'town_or_city': 'Town or City',
-            'street_address1': ' Street Address 1',
-            'street_address2': ' Street Address 2',
+            'street_address1': 'Street Address 1',
+            'street_address2': 'Street Address 2',
             'county': 'County',
         }
 
         # set autofocus to full_name field when the page loads for the cursor
         self.fields['full_name'].widget.attrs['autofocus'] = True
         # iterate through the form's field and add a star for required fields
-        for field in fields:
+        for field in self.fields:
             if self.fields[field].required:
                 placeholder = f'{placeholders[field]} *'
             else:
