@@ -1,4 +1,4 @@
-''' Contect processor to make a dic available across the entire application '''
+''' Context processor to make a dic available across the entire application '''
 
 from decimal import Decimal
 from django.conf import settings
