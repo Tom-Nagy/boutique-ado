@@ -1,0 +1,14 @@
+from django.http import HttpResponse
+
+
+class StripeWH_Handler:
+    ''' Handle Strpie Webhooks '''
+
+    def __ini__(self, request):
+        self.request = request
+
+    def handle_event(self, event):
+        ''' Hanlde a generic/unknown/unexpected webhook event '''
+        return HttpResponse(
+            content=f'Webhook received {event["type"]}',
+            status=200)
