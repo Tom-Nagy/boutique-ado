@@ -61,6 +61,11 @@ form.addEventListener('submit', function (ev) {
   $('#submit-button').attr('disabled', true);
   // If the client secret was rendered server-side as a data-secret attribute
   // on the <form> element, you can retrieve it here by calling `form.dataset.secret`
+
+  // Spinner and fading for UX
+  $('#payment-form').fadeToggle(100);
+  $('#loading-overlay').fadeToggle(100);
+
   stripe.confirmCardPayment(clientSecret, {
     payment_method: {
       card: card,
@@ -85,6 +90,10 @@ form.addEventListener('submit', function (ev) {
         'disabled': false
       });
       $('#submit-button').attr('disabled', false);
+      
+      // Spinner and fading for UX 
+      $('#payment-form').fadeToggle(100);
+      $('#loading-overlay').fadeToggle(100);
     } else {
       // The payment has been processed!
       if (result.paymentIntent.status === 'succeeded') {
