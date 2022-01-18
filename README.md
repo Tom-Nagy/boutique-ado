@@ -1,108 +1,405 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# **What You Need** :seedling:
 
-Welcome Tom-Nagy,
+![Mockup](mockup picture)
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
+**What You Need** is an e-commerce web application that propose a range of indoor and outdoor plants to make your home or office healthier and a bit more special. :potted_plant:
+This project is build with growth in mind and offer opportunities to add and improve features as the business develops.
 
-You can safely delete this README.md file, or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **September 1, 2021**
+Visit the live Website : **[What You Need :arrow_right:](website link)**
 
-## Gitpod Reminders
+## Table of Content
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+* [Project](#Project)
+  * [Project Goals](#Project-Goals)
+  * [Developer and Business Goals](#Developer-and-Business-Goals)
+  * [User Goals](#User-Goals)
+* [UX](#UX)
+  * [Audience Definition](#Audience-Definition)
+  * [User Stories](#User-Stories)
+  * [Design Choices](#Design-Choices)
+  * [Wireframes](#Wireframes)
+  * [Different Design](#Different-Design)
+* [Features](#Features)
+* [Flowchart](#Flowchart)
+* [Database](#Database)
+  * [Database Design](#Database-Design)
+  * [Database Structure](#Database-Structure)
+* [Code Structure/Organisation](#Code-Structure/Organisation)
+* [Technologies Used](#Technologies-Used)
+* [Testing](#Testing) [:fast_forward: TESTING.md](TESTING.md)
+* [Deployment](#Deployment) [:fast_forward: DEPLOYMENT.md](DEPLOYMENT.md)
+* [Bugs](#Bugs)
+* [Credits](#Credits)
+  * [Content](#Content)
+  * [Acknowledgements](#Aknowledgements)
 
-`python3 -m http.server`
+## Project
 
-A blue button should appear to click: _Make Public_,
+### Project Goals
 
-Another blue button should appear to click: _Open Browser_.
+What You Need is an MVP(Model View Project) build for educational purposes that promotes green and healthy homes and offices.
 
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
+In this year 2022 we can observe a shift in lifestyles needs and organisation. People that use to spend most of their time at work, now work part or full-time from home.
 
-A blue button should appear to click: _Make Public_,
+One of today's challenges is mental health. People are more conscious about it, and they are looking for ways to improve their mental health. They want to feel good or better about themselves and about what they do.
 
-Another blue button should appear to click: _Open Browser_.
+Research prove that plants and natural elements provide a positive impact on people increasing well-being and productivity.  
+This creates a market opportunity for helping customers improving their workspace and home. At the same time, the e-commerce market is expanding with more people using the web to get what they need every day.
 
-In Gitpod you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+In response to this demand, **What You Need** online shop offers a wide variety of plants. From the most delicate plants to the most indestructible, you will find what you need today!
 
-To log into the Heroku toolbelt CLI:
+### Developer and Business Goals
 
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
+* Develop a viable e-commerce web application.
+* Provide a user-friendly interface.
+* Provide an amazing user-experience across multiple device sizes.
+* Improve Wellness and health.
 
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you so do not share it. If you accidentally make it public then you can create a new one with _Regenerate API Key_.
+### User Goals
 
-------
+* Easy to use application.
+* Getting clear information.
+* Quick access to products.
+* Buy plants for their homes or offices.
 
-## Release History
+[**:back:** *Table of Content*](#Table-of-Content)
 
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
+## UX
 
-**September 1 2021:** Remove `PGHOSTADDR` environment variable.
+### Audience definition
 
-**July 19 2021:** Remove `font_fix` script now that the terminal font issue is fixed.
+1. The primary targeted audience is very broad and address all **online customers**.
+2. The secondary targeted audience is **Corporates or Businesses**.
 
-**July 2 2021:** Remove extensions that are not available in Open VSX.
+Both targeted audience are looking for plants to buy for their home, office(s) or business. They can be considered as one. The difference will reside in the quantity needed. This is managed with specials deals category for larger orders.
 
-**June 30 2021:** Combined the P4 and P5 templates into one file, added the uptime script. See the FAQ at the end of this file.
+### User stories
 
-**June 10 2021:** Added: `font_fix` script and alias to fix the Terminal font issue
+#### Customer stories
 
-**May 10 2021:** Added `heroku_config` script to allow Heroku API key to be stored as an environment variable.
+##### Website navigation and browsing
 
-**April 7 2021:** Upgraded the template for VS Code instead of Theia.
+1. As a user, I want a user-friendly, simple and interactive website.
+2. As a user, I want to be able to access the website on different devices with the same experience.
+3. As a user, I want to find out what is the website purposes.
+4. As a user, I want to search products by category.
+5. As a user, I want to search for specific products.
+6. As a user, I want to see more details about a product.
 
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
+##### Shopping experience
 
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
+1. As a customer, I want to easily identify what is the price of the product.
+2. As a customer, I want to easily identify if the product is available.
+3. As a customer, I want to choose the size and quantity of a product.
+4. As a customer, I want to add/remove/edit product(s) in my shopping bag.
+5. As a customer, I want to easily access my shopping bag.
+6. As a customer, I want to make a purchase.
+7. As a customer, I want the purchase process to be easy and secure.
+8. As a customer, I want to be notified of the purchase I have made and be provided with a receipt.
+9. As a customer, I want to contact the website owner about a past order.
 
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
+##### Sign-in and registration
 
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
+1. As a user, I want to create an account.
+2. As registered user, I want to sign-in and sign-out easily.
+3. As registered user, I want to change my password if forgotten or not safe anymore.
+4. As signed-in user, I want to save/update information to my profile for a better and easier experience.
+5. As signed-in user, I want to save products I like for a future purchase.
+6. As signed-in user, I want to see/edit my wishlist.
+7. As signed-in user, I want to access my previous orders.
+8. As signed-in user, I want to leave a review on a product.
 
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
+#### Site owner/Admin stories
 
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
+1. As an Admin, I want to add/edit/delete products.
+2. As an Admin, I want to add/edit/delete categories.
+3. As an Admin, I want to see orders.
+4. As an Admin, I want to manage customer queries.
 
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
+[**:back:** *Table of Content*](#Table-of-Content)
 
-------
+### Design Choices
 
-## FAQ about the uptime script
+The approach concerning design choices is that the UX (User experience) should be the same across all platform and devices. Consistency being a key factor for UX.  
+For this reason the UI (User Interface) is kept the same across different device sizes. This does not exclude the consideration for any extra or different features, should it improve the user experience.
 
-**Why have you added this script?**
+#### Fonts
 
-It will help us to calculate how many running workspaces there are at any one time, which greatly helps us with cost and capacity planning. It will help us decide on the future direction of our cloud-based IDE strategy.
+Considering the targeted audience, the sans serif type of font is the more appropriate because it is most often associated with simplicity and straightforwardness.  
 
-**How will this affect me?**
+The website will use well known and popular font that are used online in order to bring to the user a "feeling of knowing".
 
-For everyday usage of Gitpod, it doesn’t have any effect at all. The script only captures the following data:
+* *Poppins* for headings.
 
-- An ID that is randomly generated each time the workspace is started.
-- The current date and time
-- The workspace status of “started” or “running”, which is sent every 5 minutes.
+* *Lato* for main content.
 
-It is not possible for us or anyone else to trace the random ID back to an individual, and no personal data is being captured. It will not slow down the workspace or affect your work.
+*Sans serif* will be use as a fall back if the fonts do not load. It is common as the main typographies are sans serif type.
 
-**So….?**
+#### Icons
 
-We want to tell you this so that we are being completely transparent about the data we collect and what we do with it.
+* Some Font Awesome icons will be part of the website for better UX.
+* The [logo](app/static/images/logo/logo.png) and [favicon](app/static/images/favicon/favicon.ico) are the same image and use the color scheme of the website.
 
-**Can I opt out?**
+![logo](images/logo/logo.png)
 
-Yes, you can. Since no personally identifiable information is being captured, we'd appreciate it if you let the script run; however if you are unhappy with the idea, simply run the following commands from the terminal window after creating the workspace, and this will remove the uptime script:
+#### Colors
 
-```
-pkill uptime.sh
-rm .vscode/uptime.sh
-```
+![Color palette](colours-theme.png)
 
-**Anything more?**
+The colours chosen for the website are simple and joyful. They are based on the psychology behind colours ([colour affects](http://www.colour-affects.co.uk/psychological-properties-of-colours), [London Image Institute](https://londonimageinstitute.com/how-to-empower-yourself-with-color-psychology/)).
 
-Yes! We'd strongly encourage you to look at the source code of the `uptime.sh` file so that you know what it's doing. As future software developers, it will be great practice to see how these shell scripts work.
+[Adobe Color](https://color.adobe.com) was used to build the colour scheme, compatibility and accessibility. The color scheme and swatches are said color-blind safe.
 
----
+![Color accessibility](colours-accessibility.png)
 
-Happy coding!
+#### Images
+
+The images will be the one uploaded by website owner and/or Admin for products descriptions and website illustrations.  
+
+MAYBE IMAGES WILL BE UPLOADED USING A DATA FROM A WEBSITE 111111111111111111
+
+#### Styling/Feeling
+
+The feel of the website is welcoming and simple to provide a quick access and learning process.  
+It makes users comfortable.
+
+#### Audio/Video
+
+No audio or video will be integrated at the moment.
+
+[**:back:** *Table of Content*](#Table-of-Content)
+
+### Wireframes
+
+![Site map](README-images/wireframes/site-map.png)
+
+* [Home page](README-images/wireframes/home.pdf)
+* [About page](README-images/wireframes/about.pdf)
+* [Contact page](README-images/wireframes/contact.pdf)
+* [Terms and Conditions of use page](README-images/wireframes/t-c.pdf)
+* [Sign-in page](README-images/wireframes/signin.pdf)
+* [create an account page](README-images/wireframes/create-account.pdf)
+* [Products page](README-images/wireframes/products.pdf)
+* [Product details page](README-images/wireframes/product-details.pdf)
+* [Search page](README-images/wireframes/search.pdf)
+* [Orders history page](README-images/wireframes/orders-history.pdf)
+* [Order details page](README-images/wireframes/order-details.pdf)
+* [Order issue page](README-images/wireframes/order-issue.pdf)
+* [Account details page](README-images/wireframes/account-details.pdf)
+* [Wishlist page](README-images/wireframes/wishlist.pdf)
+* [Bag page](README-images/wireframes/bag.pdf)
+* [Checkout page](README-images/wireframes/checkout.pdf)
+* [Add product page](README-images/wireframes/add-product.pdf)
+* [Add category page](README-images/wireframes/add-category.pdf)
+* [Error page](README-images/wireframes/error-page.pdf)
+
+For the full version:
+
+* [Family Friendly website](README-images/wireframes/what-you-need.pdf)
+
+[**:back:** *Table of Content*](#Table-of-Content)
+
+### Different design
+
+After considering deadline and features priority, I decided to leave the support section for future features to implement. I once heard that the project is never finished, we just run out of time!
+
+[**:back:** *Table of Content*](#Table-of-Content)
+
+## Features
+
+To build this project, I use Django framework with the Jinja templating language. For consistency across the website some features will be repeated and functionality will be kept as simple and direct as possible.
+
+* Navigation is always present and fix at the bottom of the page
+  * Home
+  * Account/profile
+  * Bag
+  * Search
+
+* Browse product
+  * By clicking the callout button on the landing page
+  * By clicking the search menu button/icon
+  * By category
+  * By typing in the search bar
+
+* Shopping bag
+  * View the shopping bag
+  * Add products to the bag
+  * Remove/edit products in the bag
+
+* Checkout
+  * Purchase item securely with Stripe payment system
+  * Save delivery information
+  * Payment confirmation
+  * Order confirmation
+
+* Account/Profile
+  * Create an account
+  * Sign-in and sign-out
+  * Update account information
+  * Change password if forgotten or unsecure
+  * Access orders history
+  * File issue regarding an order
+  * Access and update wishlist
+
+[**:back:** *Table of Content*](#Table-of-Content)
+
+## Flowchart
+
+![Website flowchart](README-images/design/flowchart.png)
+
+[**:back:** *Table of Content*](#Table-of-Content)
+
+## Database
+
+### Database design
+
+The database design used is a relational database.
+
+* During **development**, sqlite3 was used. It is the database provided by Django and only use for development.
+* For **Production**, Postgres is used. It is the database provided by Heroku when deploying the website live.
+
+Below is a representation of the database used for this project.
+![Database Design](README-images/design/database-design.png)
+
+### Database Structure
+
+Django, the framework used for the production of this project, is an MVP: Model View Product/Project ??????? This means that the project build with Django is divided in multiple apps. Its structure allows separation of concern and provide many built-in features.  
+The models define the data-structure.
+
+* In this project, the following models have been developed:
+  * Product
+  * Category
+  * Order
+  * OrderLineItem
+  * OrderIssue
+  * User
+  * UserAccount
+  * Review
+They can be grouped into three main models : Product, Order, UserAccount
+
+* Models relationship:
+  * Product :left_right_arrow: Category: **Many to Many**
+    * A Product can be related to many Category, and a Category can be related to many Product.
+  
+  * Product :left_right_arrow: OrderLineItem: **Many to One**
+    * A Product can be related to many OrderLineItem, but an OrderLineItem can be related to one Product.
+  
+  * Product :left_right_arrow: Review: **Many to One**
+    * A Product can be related to many Review, but a Review can be related to one Product.
+  
+  * Order :left_right_arrow: UserAccount: **One to Many**
+    * A Order can be related to one UserAccount, but a UserAccount can be related to many Order.
+  
+  * Order :left_right_arrow: OrderLineItem: **Many to One**
+    * An Order can be related to many OrderLineItem, but an OrderLineItem can be related to one Order.
+  
+  * Order :left_right_arrow: OrderIssue: **Many to One**
+    * An Order can be related to many OrderIssue, but an OrderIssue can be related to one Order.
+  
+  * UserAccount :left_right_arrow: Review: **Many to One**
+    * A UserAccount can be related to many Review, but a Review can be related to one UserAccount.
+  
+  * UserAccount :left_right_arrow: User: **One to One**
+    * A UserAccount can be related to one User, and a User can be related to one UserAccount.
+  
+  * UserAccount :left_right_arrow: OrderIssue: **Many to One**
+    * An UserAccount can be related to many OrderIssue, but an OrderIssue can be related to one UserAccount.
+
+## Technologies Used
+
+### Programming Languages
+
+This project was developed using:
+
+* HTML
+* CSS
+* JavaScript
+* Python
+* Jinja templating language.
+
+### Frameworks, Libraries and Programs
+
+* [Django](https://www.djangoproject.com/)  
+Framework used to develop the website.
+
+* [Balsamiq](https://balsamiq.com/wireframes/)  
+For creating wireframes.
+
+* [lucichart](https://www.lucidchart.com/)  
+For producing the flowchart and database design.
+
+* [Google Fonts](https://fonts.google.com/)  
+For importing fonts.
+
+* [favicon.io](https://favicon.io/favicon-converter/)  
+For generating the favicon.
+
+* [TinyPNG](https://tinypng.com/) or [Squoosh](https://squoosh.app/)  
+For resizing all the images.
+
+* [BeFunky](https://www.befunky.com/create/)
+For cropping some images.
+
+* [Adobe Color](https://color.adobe.com/create/image)  
+For extracting the color scheme used on the website.
+
+* [Am I Responsive?](http://ami.responsivedesign.is/?url=http://ami.responsivedesign.is/#)  
+For providing screenshots of the responsiveness of the website across several devices.
+
+* [Autoprefixer CSS online](https://autoprefixer.github.io/)  
+For adding prefixer in style.css for cross browser compatibility.
+
+* [Git](https://git-scm.com/)  
+For Version control.
+
+* [GitPod](https://www.gitpod.io/)  
+For Integrated Development Environment.
+
+* [GitHub](https://github.com/)  
+For hosting the repository.
+
+* [Heroku](https://www.heroku.com/home)  
+For deploying the website live.
+
+[**:back:** *Table of Content*](#Table-of-Content)
+
+## Testing
+
+Testing information are published in a separate file for better readability.
+Please see [TESTING.md](TESTING.md).
+
+## Deployment
+
+Deployment information are published in a separate file for better readability.
+Please see [DEPLOYMENT.md](DEPLOYMENT.md).
+
+## Bugs
+
+## Credits
+
+### Code
+
+
+
+### Content
+
+[W3schools](https://www.w3schools.com/)  
+
+[W3docs](https://www.w3docs.com/)
+
+[stack overflow](https://stackoverflow.com/)
+
+[GeeksforGeeks](https://www.geeksforgeeks.org/)
+
+[Net Lawman](https://www.netlawman.co.uk/d/website-privacy-policy)  
+For privacy policy template.
+
+### Acknowledgements
+
+Special thanks to all Code Institute's team (“Teacher”, Lecturers and Tutors) that are making me more knowledgeable and are making this happen.
+
+Huge thank you to the [Slack](code-institute-room.slack.com) community, all the members and all the leads and tutors for their help and support.
+
+I am hugely grateful to my mentor Chris Quinn for guiding me through this project.
+
+[**:back:** *Table of Content*](#Table-of-Content)
