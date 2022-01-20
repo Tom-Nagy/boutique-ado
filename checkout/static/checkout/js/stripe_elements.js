@@ -31,7 +31,7 @@ var card = elements.create('card', {
   style: style
 });
 
-card.mount('#card-element')
+card.mount('#card-element');
 
 // Handle realtime validation errors ont the card element
 card.addEventListener('change', function (event) {
@@ -52,7 +52,7 @@ card.addEventListener('change', function (event) {
 // Handle form submit
 var form = document.getElementById('payment-form');
 
-form.addEventListener('submit', function (ev) {
+form.addEventListener('submit', function(ev) {
   ev.preventDefault();
   // disable card and the submit button during processing
   card.update({
@@ -134,12 +134,12 @@ form.addEventListener('submit', function (ev) {
           // execution. Set up a webhook or plugin to listen for the
           // payment_intent.succeeded event that handles any business critical
           // post-payment actions.
-          form.submit()
+          form.submit();
         }
       }
     });
   }).fail(function() {
     // just reload the page, the error will be django messages
     location.reload();
-  })
+  });
 });
