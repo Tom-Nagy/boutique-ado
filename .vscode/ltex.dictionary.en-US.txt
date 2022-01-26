@@ -9,3 +9,7 @@ url
 dj
 django
 json
+gunicorn
+dyno
+Procfile
+collectstatic

@@ -163,9 +163,31 @@ The next step is the live deployment of the website :arrow_double_down:
     * ``python3 manage.py createsuperuser``
     * Enter a Username, email address and password to complete.
 
-17. Remove the Heroku database config and uncomment the original so your database url doesn't end up in version control.
+17. In settings.py Remove the Heroku database config and uncomment the original so your database url doesn't end up in version control.
     * The Database settings should be reverted to the way it was:
     * ![Revert Database](revert-database.png)
+    * ::warning:: The Heroku DATABASE_URL should never be public and stay secret. So do not commit your work before you removed the Heroku DATABASE_URL from your file.
+
+18. Now to set up the database depending on the environment (Live on Heroku: -version control/production- or locally on your IDE: -development-); we add an if statement that will set the database to connect to **SQLite** if run locally or set to **Postgres** if run on Heroku.
+    * In settings.py your database settings should look like this now:
+    * ![Environment database settings](environ-database-settings.png)
+
+19. Now we need to install gunicorn, which will act as our web server. Type in the CLI:
+    * ``pip3 install gunicorn``
+    * Freeze the package by typing ``pip3 freeze > requirements.txt``
+
+20. Create a Procfile to tell Heroku to create a web dyno and how to run the project.
+    * Type in the terminal ``echo web: gunicorn <NAME OF YOUR MAIN FOLDER>.wsgi:application > Procfile``.
+    * It is important to note that *the name of your main folder* reflects the name of your project and is where settings.py is located; and *Procfile* is with a capital **P**.
+
+21. Add ``ALLOWED_HOSTS = ['<YOUR APP NAME>.herokuapp.com', 'localhost']`` in settings.py.
+    * Add the host name of your Heroku app and localhost, so it still works on your IDE.
+    * ![Allowed hosts](allowed-hosts.png)
+
+22. Temporarily disable collectstatic in Heroku by using Heroku configuration settings with the **variable Key= DISABLE_COLLECSTATIC** and its **value= 1** so that Heroku will not try to collect static files when we deploy.
+    * ![Disablecollecstatic](disable-collecstatic.png)
+
+23. Add, commit and push your changes to GitHub.
 
 <!-- 
 5. Navigate to the Deploy tab and notice that three options are given to you on how to deploy your app.

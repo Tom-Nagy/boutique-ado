@@ -379,8 +379,6 @@ Please see [DEPLOYMENT.md](DEPLOYMENT.md).
 
 ### Code
 
-
-
 ### Content
 
 [W3schools](https://www.w3schools.com/)  
