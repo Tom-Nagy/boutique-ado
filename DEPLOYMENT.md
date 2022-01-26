@@ -185,122 +185,38 @@ The next step is the live deployment of the website :arrow_double_down:
     * Add the host name of your Heroku app and localhost, so it still works on your IDE.
     * ![Allowed hosts](allowed-hosts.png)
 
-22. Temporarily disable collectstatic in Heroku by using Heroku configuration settings with the **variable Key= DISABLE_COLLECSTATIC** and its **value= 1** so that Heroku will not try to collect static files when we deploy.
-    * ![Disablecollecstatic](disable-collecstatic.png)
+22. Temporarily disable collectstatic in Heroku.
+    * Log-in to Heroku in the CLI by typing:
+      * ``heroku login -i``
+      * Enter your credentials to complete.
 
-23. Add, commit and push your changes to GitHub.
+    * Initialize your Heroku git remote by typing in the CLI:
+      * ``heroku git:remote -a < HEROKU APP NAME >``, the CLI will prompt ``set git remote heroku to <your heroku git url>``
 
-24. Log-in to Heroku in the CLI by typing:
-    * ``heroku login -i``
-    * Enter your credentials to complete.
+    * Using Heroku config set type in the CLI :``heroku config:set DISABLE_COLLECTSTATIC=1``so that Heroku will not try to collect static files when we deploy.
+    <!-- * ![Disablecollecstatic](disable-collecstatic.png) -->
 
-25. Initialize your Heroku git remote in order to push your work to Heroku by typing in the CLI:
-    * ``heroku git:remote -a < HEROKU APP NAME >``, the CLI will prompt ``set git remote heroku to <your heroku git url>``
+    * Add, commit and push your changes to GitHub.
+
     * Push your work to Heroku by typing: ``git push heroku main``
-    * Note that here the “main/master” branch is called “main”. You can check your main branch name in the settings of your repository on GitHub.
+      * Note that here the “main/master” branch is called “main”. You can check your main branch name in the settings of your repository on GitHub.
 
-26. Create and add a secret key to the config vars of the heroku app in the settings tab. You can generate one by looking up [Django secret key generator online](https://miniwebtool.com/django-secret-key-generator/)
+23. Create and add a secret key to the config vars of the heroku app in the settings tab. You can generate one by looking up [Django secret key generator online](https://miniwebtool.com/django-secret-key-generator/)
     * ![Secret key](heroku-secret-key.png)
 
-27. In settings.py change configuration for secret key and debug to separate development to production:
+24. In settings.py change configuration for secret key and debug to separate development to production:
     * ``SECRET_KEY = os.environ.get('SECRET_KEY', '')``
     * ``DEBUG = 'DEVELOPMENT' in os.environ``
     * This is so debug is true in development environment, but false in production.
     * You will need to add Variables to your own project either in an env.py file or in your IDE variables like in GitPod:
     * ![GitPod variables](gitpod-variables.png)
 
-28. Add, commit and push your changes to GitHub.
+25. Add, commit and push your changes to GitHub.
 
-<!-- 
-5. Navigate to the Deploy tab and notice that three options are given to you on how to deploy your app.
-
-
-We are going to cover the Heroku Git method using Heroku CLI and the GitHub method connecting to GitHub.
-
-### Heroku Git method
-
-Here we are using Heroku command-line-interface (CLI) also known as **Heroku toolbelt**.
-
-1. Navigate to your app dashboard.
-
-2. Click on the Deploy tab.
-
-3. Scroll down and click on ``Heroku Git`` method.
-
-4. Scroll down to *Install the Heroku CLI*:
-    * There are different option available to deploy the project.
-
-5. Go to your Integrated Development Environment (IDE) and open your project.
-
-6. Open the **terminal** and follow the next steps.
-
-7. Install Heroku by typing:
-    * `` npm install -g heroku`` in the CLI.
-    * **npm** stand for Node Package Manager.
-    * **-g** means that we install the Heroku **globally** or system-wide.
-    * It is important to note that if **-g** is not included, Heroku will only be installed within a directory called “node-modules” and it will not work as we want it to.
-
-8. Login to Heroku in the terminal:
-    
-    * Follow the steps by entering the account details used for this project on Heroku.
-
-9. On the Heroku platform and on your app dashboard, look for **Open app** on the top right by scrolling up:
-    * ![open-app](app/static/images/README-images/DEPLOYMENT-images/open-app.png)
-
-10. Now your Heroku app is running:
-    * Note that this is the default Heroku app and that you still need to **push** your project to it.
-    * Your app's URL corresponds to https://**your-app-name**.herokuapp.com
-
-#### Push your code to the Git URL that Heroku provides
-
-1. Go to settings on your Heroku dashboard and copy your Heroku Git URL.
-2. ![Heroku settings](app/static/images/README-images/DEPLOYMENT-images/heroku-settings)
-3. ![Heroku Git URL](app/static/images/README-images/DEPLOYMENT-images/heroku-git-url)
-4. Create another git remote (that will be different from “origin”)
-    * Type in the terminal ``git remote add *name-of-your-remote*`` + paste the Git URL and press enter.
-    * ![Git remote command](app/static/images/README-images/DEPLOYMENT-images/git-remote-command.png)
-5. Push to Heroku:
-    * Type in the terminal ``git push -u *name-of-your-remote* master``
-    * ![Push to Heroku](app/static/images/README-images/DEPLOYMENT-images/push-to-heroku.png)
-6. You will get an error message because the requirements file is missing. We will add it in the next step.
+26. Now every time you add, commit and push to GitHub, it will automatically deploy to Heroku.
 
 
-### GitHub method
-
-This method use Automatic Deployment from GitHub, by linking a GitHub repository to Heroku and deploy it automatically.
-
-1. From the Deploy section of your app, click on the GitHub Deployment method:
-2. ![Deploy with GitHub](app/static/images/README-images/DEPLOYMENT-images/deploy-github.png)
-3. Click on connect to GitHub and Authorize Heroku to connect.
-    * ![Connect GitHub](app/static/images/README-images/DEPLOYMENT-images/connect-github.png)
-    * ![Authorize Heroku](app/static/images/README-images/DEPLOYMENT-images/auth-heroku.png)
-4. Fill up the input for the name of your repository and click search.
-5. Click connect.
-    * ![Connect the app](app/static/images/README-images/DEPLOYMENT-images/connect-app.png)
-6. You need to make sure your project is not connected to Heroku but only to GitHub:
-    * in the terminal, type `git remote -v` and if it returns more the *heroku* remote, than remove it with the command ``git remote rm *name-of-your-remote*``
-7. **Add** and **Push** your project to GitHub typing in the terminal:
-    * ``git add .``
-    * ``git commit -m "Push to GitHub."``
-    * ``git push origin master``
-    * Note that here the “main” branch is called “master”. You can check your main branch name in the settings of your repository on GitHub.
-8. Click on ``Deploy Automatically`` and ``Deploy Branch``.
-    * ![Deployment](app/static/images/README-images/DEPLOYMENT-images/final-deploy.png)
-9. When Deployment successful, you can view the website clicking on ``view`` or ``Òpen app``
-    * ![Open app GitHub](app/static/images/README-images/DEPLOYMENT-images/view-app-github.png)
-
-### App Configurations
-
-Because in this project we use a secret-key and other variables, we need, for the application to fully function, to add any hidden environment variables, or Config Vars, within our App Settings.
-
-* Go to the app settings.
-* Click on ``Reveal Config Vars``.
-* ![Reveal Config Vars](app/static/images/README-images/DEPLOYMENT-images/reveal-config-vars.png)
-* Add the variables as shown:
-* ![Config Vars](app/static/images/README-images/DEPLOYMENT-images/config-vars.png)
-* Most of those variables come from the env.py file. File that is never push to GitHub for security reason.
-
-:warning: Never share sensible and private information as they are confidential and could put the security of your database and website at risk.
+<!-- :warning: Never share sensible and private information as they are confidential and could put the security of your database and website at risk.
 
 #### Key steps to Deploy on Heroku
 
