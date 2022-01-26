@@ -2,7 +2,7 @@
 
 ![Mockup](mockup picture)
 
-**What You Need** is an e-commerce web application that propose a range of indoor and outdoor plants to make your home or office healthier and a bit more special. :potted_plant:
+**What You Need** is an e-commerce web application that propose a range of indoor and outdoor plants to make your home or office healthier and a bit more special.  
 This project is build with growth in mind and offer opportunities to add and improve features as the business develops.
 
 Visit the live Website : **[What You Need :arrow_right:](website link)**

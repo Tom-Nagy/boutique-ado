@@ -5,3 +5,7 @@ colours
 colour
 OrderLineItem
 Jinja
+url
+dj
+django
+json
