@@ -179,6 +179,7 @@ The next step is the live deployment of the website :arrow_double_down:
 20. Create a Procfile to tell Heroku to create a web dyno and how to run the project.
     * Type in the terminal ``echo web: gunicorn <NAME OF YOUR MAIN FOLDER>.wsgi:application > Procfile``.
     * It is important to note that *the name of your main folder* reflects the name of your project and is where settings.py is located; and *Procfile* is with a capital **P**.
+    * Make sure that there is no blank line in your Procfile that should include only one line.
 
 21. Add ``ALLOWED_HOSTS = ['<YOUR APP NAME>.herokuapp.com', 'localhost']`` in settings.py.
     * Add the host name of your Heroku app and localhost, so it still works on your IDE.
@@ -188,6 +189,15 @@ The next step is the live deployment of the website :arrow_double_down:
     * ![Disablecollecstatic](disable-collecstatic.png)
 
 23. Add, commit and push your changes to GitHub.
+
+24. Log-in to Heroku in the CLI by typing:
+    * ``heroku login -i``
+    * Enter your credentials to complete.
+
+25. Initialize your Heroku git remote in order to push your work to Heroku by typing in the CLI:
+    * ``heroku git:remote -a < HEROKU APP NAME >``, the CLI will prompt ``set git remote heroku to <your heroku git url>``
+    * Push your work to Heroku by typing: ``git push heroku main``
+
 
 <!-- 
 5. Navigate to the Deploy tab and notice that three options are given to you on how to deploy your app.
@@ -219,7 +229,7 @@ Here we are using Heroku command-line-interface (CLI) also known as **Heroku too
     * It is important to note that if **-g** is not included, Heroku will only be installed within a directory called “node-modules” and it will not work as we want it to.
 
 8. Login to Heroku in the terminal:
-    * Type ``heroku login -i``.
+    
     * Follow the steps by entering the account details used for this project on Heroku.
 
 9. On the Heroku platform and on your app dashboard, look for **Open app** on the top right by scrolling up:
@@ -241,16 +251,7 @@ Here we are using Heroku command-line-interface (CLI) also known as **Heroku too
     * Type in the terminal ``git push -u *name-of-your-remote* master``
     * ![Push to Heroku](app/static/images/README-images/DEPLOYMENT-images/push-to-heroku.png)
 6. You will get an error message because the requirements file is missing. We will add it in the next step.
-7. We need to create a requirements.txt file that will list all the Python dependencies the project needs to install in order to run successfully:
-    * This will provide Heroku a mean to know what language we are using.
-    * Type in the terminal ``pip3 freeze --local > requirements.txt``. This will redirect the output of the freeze command (that list the dependencies) into a file called **requirements.txt**.
-    * **Add**, **Commit** and **Push** to Heroku remote master as in step **5.**:
-    * ![Requirements file](app/static/images/README-images/DEPLOYMENT-images/create-requirements-file.png)
-8. Create a Procfile:
-    * Type in the terminal ``echo web: python run.py > Procfile``.
-    * It is important to note that *run.py* is the name of our python file and *Procfile* is with a capital **P**.
-9. **Add**, **Commit** and **Push**
-10. By reloading a refreshing your app on Heroku or by clicking on ``Open app``, your app should display now.
+
 
 ### GitHub method
 
