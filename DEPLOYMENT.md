@@ -197,6 +197,7 @@ The next step is the live deployment of the website :arrow_double_down:
 25. Initialize your Heroku git remote in order to push your work to Heroku by typing in the CLI:
     * ``heroku git:remote -a < HEROKU APP NAME >``, the CLI will prompt ``set git remote heroku to <your heroku git url>``
     * Push your work to Heroku by typing: ``git push heroku main``
+    * Note that here the “main” branch is called “main”. You can check your main branch name in the settings of your repository on GitHub.
 
 
 <!-- 
