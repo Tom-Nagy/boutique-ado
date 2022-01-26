@@ -12,11 +12,7 @@ Visit the live Website : **[What You Need :arrow_right:](https://WEBSITE-NAME.he
   * [Installations and dependencies](#Installations-and-dependencies)
 * [Live Deployment](#Live-Deployment)
   * [Create the Heroku app](#Create-the-Heroku-app)
-  * [Heroku Git method](#Heroku-Git-method)
-  * [GitHub method](#GitHub-method)
-* [App Configurations](#App-Configurations)
-* [Implementing API](#Implementing-API)
-  * [Emailjs](#Emailjs)
+  * [Set up AWS s3 to host our static files and images](#Set-up-AWS-s3-to-host-our-static-files-and-images)
 
 This project was developed on [GitPod Workspaces IDE](https://www.gitpod.io/) (Integrated Development Environment) committed and pushed to GitHub, to [my Repository](https://github.com/Tom-Nagy/family-friendly) using GitPod Command Line Interface (CLI) with [Git version control](https://git-scm.com/).
 
@@ -194,7 +190,8 @@ The next step is the live deployment of the website :arrow_double_down:
       * ``heroku git:remote -a < HEROKU APP NAME >``, the CLI will prompt ``set git remote heroku to <your heroku git url>``
 
     * Using Heroku config set type in the CLI :``heroku config:set DISABLE_COLLECTSTATIC=1``so that Heroku will not try to collect static files when we deploy.
-    <!-- * ![Disablecollecstatic](disable-collecstatic.png) -->
+      * This command creates a new var in heroku as shown below:
+      * ![Disable collecstatic](disable-collecstatic.png)
 
     * Add, commit and push your changes to GitHub.
 
@@ -214,6 +211,71 @@ The next step is the live deployment of the website :arrow_double_down:
 25. Add, commit and push your changes to GitHub.
 
 26. Now every time you add, commit and push to GitHub, it will automatically deploy to Heroku.
+
+### Set up AWS s3 to host our static files and images
+
+Now we will set up Amazon Web Services([AWS](https://aws.amazon.com/)) s3(simple storage service) which is a cloud-based storage service that will allow us to store static files and images for the project.
+
+1. Navigate to https://aws.amazon.com/, create an account and sign in.
+
+2. Navigate or look for "s3 Scalable Storage in the Cloud" and create a new bucket used to store our files.
+    * To be consistent I recommend naming the bucket the same as your project name on Heroku.
+    * Choose the closest region to you.
+    * Uncheck "Block all public access" and acknowledge that the bucket will be public.
+      * ![AWS public access](aws-public-access.png)
+    * Click create bucket and your bucket will be created.
+
+3. Navigate to your bucket and go to the **Properties** tab.
+    * Scroll down to "Static website hosting" and click edit.
+    * Select enable static website hosting. It will give us a new endpoint we can use to access it from the internet.
+    * Enter some default values for the index document (index.html) and for the error document(error.html) as we won't use them for this project.
+    * Click save changes.
+
+4. Navigate to the **Permission** tab.
+
+   1. Scroll down to **Cross-origin resource sharing (CORS)** and click edit.
+    * Paste the following code to set up the required access between our Heroku app and this s3 bucket and click save changes.
+
+        ```json
+        [
+            {
+            "AllowedHeaders": [
+                "Authorization"
+            ],
+            "AllowedMethods": [
+                "GET"
+            ],
+            "AllowedOrigins": [
+                "*"
+            ],
+            "ExposeHeaders": []
+            }
+        ]
+        ```
+
+   2. Go to the **Bucket Policy** and click edit.
+    * Click on "Policy Generator" so we can create a security policy for this bucket.
+      * Choose "S3 Bucket Policy" from the policy type list.
+      * Allow all principal by entering a star (``*``) in the principal input.
+      * Choose "GetObject" from the select Action list.
+      * Copy the ARN (Amazon Resource Name) from the "*aws Edit bucket policy*" tab and paste it into the ARN input box. It consists of ``arn:aws:s3:::<your aws bucket name>``
+      * Click "Add Statement".
+      * The statements should be similar to the following:
+        * ![AWS policy](aws-policy.png)
+      * Click "Generate Policy".
+      * Copy the code snippet provided and paste it in the bucket policy editor replacing the default one.
+      * Before to click save we need to modify the resource key because we want to allow access to all resources in this bucket. So we need to add a slash star (``/*``) at the end of the resource key as shown below:
+        * ![Resource access](resource-access.png)
+      * Click save changes.
+
+    3. Got to **Object Ownership** and click edit.
+      * Choose ACLs enabled in order to change ACL list.
+      * Acknowledge and click save changes
+
+    3. Got to **Access control list (ACL)** and click edit.
+      * At "Everyone (public access)" select List in the Objects column.
+      * Tick I understand and save changes.
+      
 
 
 <!-- :warning: Never share sensible and private information as they are confidential and could put the security of your database and website at risk.
