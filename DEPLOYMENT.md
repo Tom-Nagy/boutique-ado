@@ -197,8 +197,19 @@ The next step is the live deployment of the website :arrow_double_down:
 25. Initialize your Heroku git remote in order to push your work to Heroku by typing in the CLI:
     * ``heroku git:remote -a < HEROKU APP NAME >``, the CLI will prompt ``set git remote heroku to <your heroku git url>``
     * Push your work to Heroku by typing: ``git push heroku main``
-    * Note that here the “main” branch is called “main”. You can check your main branch name in the settings of your repository on GitHub.
+    * Note that here the “main/master” branch is called “main”. You can check your main branch name in the settings of your repository on GitHub.
 
+26. Create and add a secret key to the config vars of the heroku app in the settings tab. You can generate one by looking up [Django secret key generator online](https://miniwebtool.com/django-secret-key-generator/)
+    * ![Secret key](heroku-secret-key.png)
+
+27. In settings.py change configuration for secret key and debug to separate development to production:
+    * ``SECRET_KEY = os.environ.get('SECRET_KEY', '')``
+    * ``DEBUG = 'DEVELOPMENT' in os.environ``
+    * This is so debug is true in development environment, but false in production.
+    * You will need to add Variables to your own project either in an env.py file or in your IDE variables like in GitPod:
+    * ![GitPod variables](gitpod-variables.png)
+
+28. Add, commit and push your changes to GitHub.
 
 <!-- 
 5. Navigate to the Deploy tab and notice that three options are given to you on how to deploy your app.
