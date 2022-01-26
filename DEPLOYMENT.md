@@ -18,7 +18,7 @@ Visit the live Website : **[Family Friendly :arrow_right:](https://family-friend
 * [Implementing API](#Implementing-API)
   * [Emailjs](#Emailjs)
 
-This project was developed on [GitPod Workspaces IDE](https://www.gitpod.io/) (Integrated Development Environment) committed and pushed to my [GitHub Repository](https://github.com/Tom-Nagy/family-friendly) using GitPod Command Line Interface (CLI) with [Git version control](https://git-scm.com/).
+This project was developed on [GitPod Workspaces IDE](https://www.gitpod.io/) (Integrated Development Environment) committed and pushed to GitHub, to [my Repository](https://github.com/Tom-Nagy/family-friendly) using GitPod Command Line Interface (CLI) with [Git version control](https://git-scm.com/).
 
 ## Get Started
 
@@ -44,11 +44,11 @@ To clone a repository, take the following steps :
     * using HTTPS
     * using SSH key
     * using GitHub CLI  
-4. Choose an option and copy the link given.
+4. Choose HTTPS option and copy the link given.
 5. Change the current working directory to the location where you want the cloned directory.
 6. Open your IDE and in the CLI type : ```git clone``` and paste the link copied on step 4.
     * ```$ git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY```
-7. Press **Enter** to create your local clone.
+7. Press **Enter** and your local clone will be created.
 
 For further information please go to [Cloning a repository](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository#cloning-a-repository-using-the-command-line).
 
@@ -85,12 +85,11 @@ To Fork a repository take the following steps :
 * A requirements.txt file was created in the main project folder. This file tells what applications and dependencies are required to run the application. When you have created/cloned/forked the project, it is import to run this command in the CLI:
   * ``pip3 install -r requirements.txt`` This will make sure to install all the apps requirements for the project.
 
-* During development whenever a package or dependency is installed with ``pip3 install <name of the package>`` on the project, the following command is ran in the CLI :
-  * ``pip3 freeze > requirements.txt`` This will make sure we update all the apps requirements in requirements.txt for local deployment or for future live deployment.
+* Side note: During development whenever a package/dependency is installed with ``pip3 install <name of the package>`` on the project, the following command is ran in the CLI :
+  * ``pip3 freeze > requirements.txt`` This is to make sure we update all the apps requirements in requirements.txt for local deployment or for future live deployment.
 
-* Unless you deploy this project live, you will need to run the migration in order to create the database from the models.  
-Run the following command in the CLI:
-  * ``python3 manage.py makemigrations``
+* You will need to run the migration in order to create the database from the models. Run the following commands in the CLI:
+  * ``python3 manage.py makemigrations`` and then,
   * ``python3 manage.py migrate``
 
 * The command to run the project locally (port: 8000):
@@ -152,8 +151,8 @@ The next step is the live deployment of the website :arrow_double_down:
 
 14. Run migrations by typing in the CLI:
     * ``Python 3 manage.py migrate`` This will apply all the migrations and get the database all set up.
-s
-15. Here is the difference between using fixtures or not.
+
+15. Here is the difference between using fixtures or not.............................
 
 16. Create a superuser to log-in with by typing in the CLI:
     * ``python3 manage.py createsuperuser``
