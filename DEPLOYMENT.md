@@ -347,13 +347,20 @@ Now we will set up Amazon Web Services([AWS](https://aws.amazon.com/)) s3(simple
 
 In the "static files" section of settings.py we need to add the following code snippet.
 
-:pushpin: Note that the values will depend on your bucket. You can find the information for the region name in the properties tab of your bucket as well as the name of you bucket which is the end part of the ARN (e.i ``arn:aws:s3:::<your bucket name>``). The access key and secret access key are the one from the .csv file we downloaded earlier.
+:pushpin: Note that the values will depend on your bucket. You can find the information for the region name in the properties tab of your bucket as well as the name of you bucket which is the end part of the ARN (e.i ``arn:aws:s3:::<your bucket name>``). The access key and secret access key are the one from the .csv file we downloaded earlier.  
+As well, we will add cache control in order to tell the browser that it's okay to cache static files for a long time. This will improve performance and user experience.
 
 We use an if statement because we only want to use those on heroku, where we will add the ``USE_AWS`` var next.
 
 ```python
 # Amazon S3 Bucket
 if 'USE_AWS' in os.environ:
+
+  # Cache control
+  AWS_S3_OBJECT_PARAMETERS = {
+    'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+    'CacheControl': 'max-age=94608000',
+  }
 
   # Bucket Config
   AWS_STORAGE_BUCKET_NAME = 'your bucket name'
@@ -415,7 +422,7 @@ Now you can remove/delete the ``DISABLE_COLLECTSTATIC`` variable from the list o
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/'
     ```
 
-5. You can now add, commit and push your changes to github.
+5. You can now add, commit and push your changes to GitHub. Your static files are now deployed automatically.
 
 
 
