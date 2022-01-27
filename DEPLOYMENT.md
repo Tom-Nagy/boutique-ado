@@ -14,8 +14,12 @@ Visit the live Website : **[What You Need :arrow_right:](https://WEBSITE-NAME.he
   * [Create the Heroku app](#Create-the-Heroku-app)
   * [Set up AWS s3 to host our static files and images](#Set-up-AWS-s3-to-host-our-static-files-and-images)
   * [Connect Django to s3](#Connect-Django-to-s3)
+  * [Add Media folder to our bucket](#Add-Media-folder-to-our-bucket)
+  * [Final Steps](#Final-Steps)
 
 This project was developed on [GitPod Workspaces IDE](https://www.gitpod.io/) (Integrated Development Environment) committed and pushed to GitHub, to [my Repository](https://github.com/Tom-Nagy/family-friendly) using GitPod Command Line Interface (CLI) with [Git version control](https://git-scm.com/).
+
+:warning: Never share sensible and private information as they are confidential and could put the security of your data, database and website at risk.
 
 ## Get Started
 
@@ -424,15 +428,125 @@ Now you can remove/delete the ``DISABLE_COLLECTSTATIC`` variable from the list o
 
 5. You can now add, commit and push your changes to GitHub. Your static files are now deployed automatically.
 
+### Add Media folder to our bucket
 
+* Navigate to your s3 bucket and to the Objects tab.
+* Click on the Create Folder.
+* Name your folder media.
+* Click Create folder.
+* Click on your media folder and inside it,
+* Click Upload.
+* Click Add Files and select all the product images. If you need to download them all, you can do so from your own GitHub repo.
+* In Permissions > Access control list (ACL) > Predefined ACLs select "Grant public-read access" and tick you understand the risks.
+* Click on Upload.
 
+### Final Steps
+
+1. Confirm email address for our Superuser in Postgres database.
+
+* Login to Django Admin on the deployed production website of the project by adding ``/admin`` to the website url and press enter.
+* You are now directed to the admin login page.
+  * Fill in the information with the credentials created when creating the superuser (step 16 of "Create the Heroku app") and login.
+* Click on the Email addresses tab under ACCOUNTS.
+  * :pushpin: Note that if you do not see your email address, you will need to try and login in first into the website to force allauth to create it.
+  * Then repeat the first steps and login to admin, go to email addresses.
+* Click on your email address and mark it as **verified** and **primary**.
+* Click save.
+* You have now successfully register and can logout and login into the website.
+
+2. Set up Stripe with Heroku.
+
+* Login to your Stripe account (or create one if you don't have any).
+* Navigate to Developers tab.
+* Got to the API keys tab.
+  * Retrieve the Publishable key and the Secret key and add them in the config vars settings of your Heroku app.
+
+| KEY                   | VALUE      |
+| --------------------- |----------- |
+| STRIPE_PUBLIC_KEY     | YOUR VALUE |
+| STRIPE_SECRET_KEY     | YOUR VALUE |
+
+* Now we need to create a new webhook endpoint, so it corresponds and connects with the deployed website url.
+  * Go to the Webhooks tab in Stripe and click on Add endpoint.
+  * Add the url of your Heroku app and add at the end like so: ``<your deployed heroku app url>/checkout/wh/``
+  * Click on Select events and choose Select all events.
+  * Click on Add events.
+  * Scroll down and Click on Add endpoint.
+  * Your Webhook is now created, and you can retrieve the Signing secret from it and add it to Heroku.
+
+| KEY                   | VALUE      |
+| --------------------- |----------- |
+| STRIPE_WH_SECRET      | YOUR VALUE |
+
+:warning: Make sure that the name of your variables in Heroku correspond to the name of the variable used in the stripe set up section of settings.py of your project.
+
+![Stripe variables](stripe-vars.png)
+
+:pushpin: Note that for development, you should have all those variables stored safely somewhere too. For example in the variable settings of your GitPod.  
+As well, you should create a Webhook endpoint for development since it will be a different url.
+
+![Gitpod development Variables](gitpod-dev-vars.png)
+
+### Email set up with Django
+
+We are going to use Gmail because it is easy to use, very popular, and it provides a free SMTP server that we can use to send email.
+
+* Login to your Gmail account or create one if needed.
+* Go to settings on the upper right, and click view all settings.
+* Click on Accounts and Import tab.
+* In the "Change account settings:" section, click on "Other Google Account settings" link.
+* Go to the Security tab and navigate to "Signing in to Google".
+* Select 2-Step Verification. This will allow us to create an app password specific to our Django app that will allow it to authenticate and use our Gmail account to send emails.
+* Click on Get Started, enter your credential and click next.
+* Select your preferred option and click next.
+* Enter the pin to verify and click Turn On.
+* Navigate back to "Signing in to Google" and notice the "App passwords" tab below the 2-Step Verification tab.
+* Click on App passwords and enter your credentials.
+* Select Mail for Select app and Other for Select device and type in Django. You can set whatever you prefer, but it is best practice to stay consistent.
+* Click Generate and copy the given password.
+* Navigate to the settings tab of your Heroku app and enter the following key/value pair:
+
+| KEY                   | VALUE              |
+| --------------------- |------------------- |
+| EMAIL_HOST_PASS       | COPY THE PASSWORD  |
+| EMAIL_HOST_USER       | YOUR GMAIL ACCOUNT |
+
+* Navigate to settings.py in your project IDE and add the following code snippet to set up email.
+
+```python
+
+# Email settings
+if 'DEVELOPMENT' in os.environ:
+  EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+  DEFAULT_FROM_EMAIL = '<your default website email>' # This can be configure in the /admin page of the website under sites.
+else:
+  EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+  EMAIL_USE_TLS = True
+  EMAIL_PORT = 587
+  EMAIL_HOST = 'smtp.gmail.com'
+  EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+  EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASS')
+  DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
+```
+
+* Add, commit and push your changes.
 
 <!-- What happens now is when our project is deployed to Heroku.
 Heroku will run python3 manage.py collectstatic during the build process.
 Which will search through all our apps and project folders looking for static files.
 And it will use the s3 custom domain setting in conjunction with our custom storage classes that tell it the location at that URL -->
 
-<!-- :warning: Never share sensible and private information as they are confidential and could put the security of your database and website at risk.
+<!-- if we wanted to turn this into a real store at this point
+it would involve some additional testing on stripe.
+Setting up real confirmation emails.
+And switching our stripe settings to use the live keys rather than the test ones we're using now.
+we would also likely want to write a plethora of tests for our application.
+In particular in the checkout and shopping bag apps.
+And make some security adjustments as well as some minor changes to make it easier to work
+between our development and production environments seamlessly. -->
+
+
+<!-- :warning: Never share sensible and private information as they are confidential and could put the security of your data, database and website at risk.
 
 #### Key steps to Deploy on Heroku
 
