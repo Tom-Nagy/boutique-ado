@@ -13,6 +13,7 @@ Visit the live Website : **[What You Need :arrow_right:](https://WEBSITE-NAME.he
 * [Live Deployment](#Live-Deployment)
   * [Create the Heroku app](#Create-the-Heroku-app)
   * [Set up AWS s3 to host our static files and images](#Set-up-AWS-s3-to-host-our-static-files-and-images)
+  * [Connect Django to s3](#Connect-Django-to-s3)
 
 This project was developed on [GitPod Workspaces IDE](https://www.gitpod.io/) (Integrated Development Environment) committed and pushed to GitHub, to [my Repository](https://github.com/Tom-Nagy/family-friendly) using GitPod Command Line Interface (CLI) with [Git version control](https://git-scm.com/).
 
@@ -162,7 +163,7 @@ The next step is the live deployment of the website :arrow_double_down:
 17. In settings.py Remove the Heroku database config and uncomment the original so your database url doesn't end up in version control.
     * The Database settings should be reverted to the way it was:
     * ![Revert Database](revert-database.png)
-    * ::warning:: The Heroku DATABASE_URL should never be public and stay secret. So do not commit your work before you removed the Heroku DATABASE_URL from your file.
+    * :warning: The Heroku DATABASE_URL should never be public and stay secret. So do not commit your work before you removed the Heroku DATABASE_URL from your file.
 
 18. Now to set up the database depending on the environment (Live on Heroku: -version control/production- or locally on your IDE: -development-); we add an if statement that will set the database to connect to **SQLite** if run locally or set to **Postgres** if run on Heroku.
     * In settings.py your database settings should look like this now:
@@ -189,7 +190,7 @@ The next step is the live deployment of the website :arrow_double_down:
     * Initialize your Heroku git remote by typing in the CLI:
       * ``heroku git:remote -a < HEROKU APP NAME >``, the CLI will prompt ``set git remote heroku to <your heroku git url>``
 
-    * Using Heroku config set type in the CLI :``heroku config:set DISABLE_COLLECTSTATIC=1``so that Heroku will not try to collect static files when we deploy.
+    * Using Heroku config set, type in the CLI :``heroku config:set DISABLE_COLLECTSTATIC=1``so that Heroku will not try to collect static files when we deploy.
       * This command creates a new var in heroku as shown below:
       * ![Disable collecstatic](disable-collecstatic.png)
 
@@ -272,11 +273,157 @@ Now we will set up Amazon Web Services([AWS](https://aws.amazon.com/)) s3(simple
       * Choose ACLs enabled in order to change ACL list.
       * Acknowledge and click save changes
 
-    3. Got to **Access control list (ACL)** and click edit.
+    4. Got to **Access control list (ACL)** and click edit.
       * At "Everyone (public access)" select List in the Objects column.
       * Tick I understand and save changes.
-      
 
+5. Now the s3 bucket is ready to go, but to access it, we need to create a user. To do This we will use a service called IAM (Identity and Access Management).
+    1. Navigate to services or to the search bar, look for and select **IAM**
+      * ![AWS IAM](aws-iam.png)
+      * first we will create a group for our user to live in.
+      * Then we will create an access policy giving the group access to the s3 bucket we created.
+      * Finally, we will assign the user to the group, so it can use the policy to access all our files.
+
+    2. Click on "User groups" below Access Management.
+      * Click on create a new group and give it a name that is consistent with your project (e.i. ``manage-<your project name>``).
+      * Scroll down and click create group.
+
+    3. Click on the "Policies" below Access Management.
+      * Click on create policy.
+      * Select the JSON tab and click on the import managed policy link. This way we will import one that AWS has pre-built for full access to s3.
+      * Search for s3, select "AmazonS3FullAccess" and click import.
+      * ![AWS IAM policy](aws-iam-policy.png)
+      * We don't actually want to allow full access to everything; we only want to allow full access to our new bucket and everything within it.
+      * So get the bucket ARN from your s3 bucket and paste it in resource replacing its ``*`` value.
+        * Navigate to services and open s3 from the "recently visited" in a different tab to get your bucket ARN by clicking on your project bucket under the properties tab.
+        * We are replacing the current value by a list, so it is important to use the correct syntax as shown bellow.  
+
+        * From this:
+
+          ```json
+          "Resource": "*",
+          ```
+
+        * To this:
+
+          ```json
+          "Resource": [
+            "arn:aws:s3:::<your s3 bucket name>",
+            "arn:aws:s3:::<your s3 bucket name>/*"
+          ]
+          ```
+
+        * Click on "next: tags" and leave it as it is.
+        * Click on "next: review" and give the policy a name and a description.
+        * Click on "create policy".
+        * We are now redirected to the policies page, and we can see that the policy was created.
+      * Now we will attach the policy to the group we just created.
+        * Navigate to user groups and select the group for your project.
+        * Click on the Permissons tab.
+        * Click on Add Permissions and select Attach Policies.
+        * Search for the policy that we just created (It should be on the top of the list, otherwise use the search bar) and select it.
+        * Scroll down and click Add Permission.
+
+    4. Now we will create a user to put in the group.
+      * Click on Users below Access Management.
+      * Click on Add users.
+      * Give it a name (e.i. ``<your project name>-staticfiles-user``)
+      * Select "Access key - Programmatic access"
+      * Click on "Next: Permissions".
+      * Select the group we just created that has the policy attached and click next until you create the user as we have nothing else to add.
+
+:warning: Now download the CSV file which will contain the users access key and secret access key which we'll use to authenticate them from our Django app.
+**:warning:It is very important you download and save this CSV because once we have gone through this process we CANNOT DOWNLOAD THEM AGAIN. :no_entry:**
+
+### Connect Django to s3
+
+1. Back to your IDE, we will need to install boto3 and django-staorages.
+    * Type in the CLI: ``pip3 install boto3``, and ``pip3 install django-storages``.
+    * Freeze the packages with ``pip3 freeze > requirements.txt``.
+    * We need to add storages to our installed apps.
+    * In settings.py and in ``INSTALLED_APPS``, add storages to the list : ``'storages',``.
+
+2. We need to add some settings in settings.py to tell Django to connect to s3 and to which bucket it should be communicating with.
+
+In the "static files" section of settings.py we need to add the following code snippet.
+
+:pushpin: Note that the values will depend on your bucket. You can find the information for the region name in the properties tab of your bucket as well as the name of you bucket which is the end part of the ARN (e.i ``arn:aws:s3:::<your bucket name>``). The access key and secret access key are the one from the .csv file we downloaded earlier.
+
+We use an if statement because we only want to use those on heroku, where we will add the ``USE_AWS`` var next.
+
+```python
+# Amazon S3 Bucket
+if 'USE_AWS' in os.environ:
+
+  # Bucket Config
+  AWS_STORAGE_BUCKET_NAME = 'your bucket name'
+  AWS_S3_REGION_NAME = 'your region'
+  AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+  AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY') 
+  AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com' # tell Django where our static files will come from in production.
+```
+
+3. Add the AWS variables to the config var in heroku.
+
+Navigate to your Heroku app and to the settings. In Config vars add the following key value pair:
+
+| KEY                   | VALUE      |
+| --------------------- |----------- |
+| AWS_ACCESS_KEY_ID     | YOUR VALUE |
+| AWS_SECRET_ACCESS_KEY | YOUR VALUE |
+| USE_AWS               | True       |
+
+Now you can remove/delete the ``DISABLE_COLLECTSTATIC`` variable from the list of variables.
+
+4. Now we need to tell django that in production we want to use s3 to store our static files whenever someone runs collectstatic. And that we want any uploaded product images to go there too.
+
+    * We need to create a file in the root directory called ``custom_storages.py`` and type in the following code snippet.
+
+    ```python
+    """
+    Configure Amazon s3 for storage in production
+    """
+
+    from django.conf import settings
+    from storages.backends.s3boto3 import S3Boto3Storage
+
+
+    class StaticStorage(S3Boto3Storage):
+        """Set static file location"""
+        location = settings.STATICFILES_LOCATION
+
+
+    class MediaStorage(S3Boto3Storage):
+        """Set media files location"""
+        location = settings.MEDIAFILES_LOCATION
+    ```
+
+    * In settings.py we need to tell Django that for static file storage we want to use our storage class we just created. And git it the location to save the static files (a folder called static).
+    * We need to do the same for media files by using the default file storage and media files location settings.
+    * As well, we need to override and explicitly set the URLs for static and media files using our custom domain and the new locations.
+    * So in settings.py below our bucket settings, add in this code snippet:
+
+    ```python
+    # Static and media files
+    STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+    STATICFILES_LOCATION = 'static'
+    DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+    MEDIAFILES_LOCATION = 'media'
+
+    # Override static and media URLs in production
+    STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}/'
+    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/'
+    ```
+
+5. You can now add, commit and push your changes to github.
+
+
+
+
+<!-- What happens now is when our project is deployed to Heroku.
+Heroku will run python3 manage.py collectstatic during the build process.
+Which will search through all our apps and project folders looking for static files.
+And it will use the s3 custom domain setting in conjunction with our custom storage classes that tell it the location at that URL -->
 
 <!-- :warning: Never share sensible and private information as they are confidential and could put the security of your database and website at risk.
 
