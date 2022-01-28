@@ -289,9 +289,11 @@ input[name='q']::placeholder {
     }
 
     body {
-        height: calc(100vh -116px);
+        height: calc(100vh - 116px);
     }
 
+
+    /* css refactoring for smaller screen */
     .display-4.logo-font.text-black {
         font-size: 2rem;
     }
@@ -316,6 +318,7 @@ input[name='q']::placeholder {
     .btn.btn-outline-black.rounded-0,
     .btn.btn-black.rounded-0 {
         padding: .375rem .375rem;
+        /* font-size: .75rem; */
     }
 
     .btn.btn-outline-black.rounded-0.btn-lg,
