@@ -5,6 +5,15 @@
 **What You Need** is an e-commerce web application that propose a range of indoor and outdoor plants to make your home or office healthier and a bit more special.  
 This project is build with growth in mind and offer opportunities to add and improve features as the business develops.
 
+For this project the use of Stripe's test functionality is implemented, rather than actual live payments.
+You can make test payment with the following details:
+
+| NUMBER                | BRAND            | CVC          | DATE            |
+| --------------------- |----------------- | ------------ | --------------- |
+| 4242424242424242      | Visa             | Any 3 digits | Any future date |
+| 5555555555554444      | Mastercard       | Any 3 digits | Any future date |
+| 378282246310005       | American Express | Any 4 digits | Any future date |
+
 Visit the live Website : **[What You Need :arrow_right:](website link)**
 
 ## Table of Content
@@ -46,7 +55,8 @@ One of today's challenges is mental health. People are more conscious about it, 
 Research prove that plants and natural elements provide a positive impact on people increasing well-being and productivity.  
 This creates a market opportunity for helping customers improving their workspace and home. At the same time, the e-commerce market is expanding with more people using the web to get what they need every day.
 
-In response to this demand, **What You Need** online shop offers a wide variety of plants. From the most delicate plants to the most indestructible, you will find what you need today!
+In response to this demand, **What You Need** online shop offers a wide variety of plants. From the most delicate plants to the most indestructible. Customer can browse the website catalog by sorting or searching for specific categories, deals and plants.  
+Registered and logged in customer will benefit of the full functionalities of the website including save items into a wishlist, ratings products and leaving reviews as well as reviewing their past order and making request about an order their orders with ease and confidence and accessing community accessible only plants. So get what you need today!
 
 ### Developer and Business Goals
 
@@ -195,7 +205,7 @@ No audio or video will be integrated at the moment.
 
 For the full version:
 
-* [Family Friendly website](README-images/wireframes/what-you-need.pdf)
+* [What You Need website](README-images/wireframes/what-you-need.pdf)
 
 [**:back:** *Table of Content*](#Table-of-Content)
 

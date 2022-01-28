@@ -1,4 +1,4 @@
-# Family Friendly Deployment process
+# What You Need Deployment process
 
 **[:leftwards_arrow_with_hook: *README.md*](README.md)**
 
@@ -17,7 +17,7 @@ Visit the live Website : **[What You Need :arrow_right:](https://WEBSITE-NAME.he
   * [Add Media folder to our bucket](#Add-Media-folder-to-our-bucket)
   * [Final Steps](#Final-Steps)
 
-This project was developed on [GitPod Workspaces IDE](https://www.gitpod.io/) (Integrated Development Environment) committed and pushed to GitHub, to [my Repository](https://github.com/Tom-Nagy/family-friendly) using GitPod Command Line Interface (CLI) with [Git version control](https://git-scm.com/).
+This project was developed on [GitPod Workspaces IDE](https://www.gitpod.io/) (Integrated Development Environment) committed and pushed to GitHub, to [my Repository](https://github.com/Tom-Nagy/what-you-need) using GitPod Command Line Interface (CLI) with [Git version control](https://git-scm.com/).
 
 :warning: Never share sensible and private information as they are confidential and could put the security of your data, database and website at risk.
 
