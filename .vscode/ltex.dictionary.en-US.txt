@@ -19,3 +19,6 @@ GitPod
 btn
 btn-lg
 href
+d-md-none
+thead
+td
