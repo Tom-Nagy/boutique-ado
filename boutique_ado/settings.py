@@ -23,9 +23,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY', '')
-
+'''
+This line:
+DEBUG = 'DEVELOPMENT' in os.environ
+Says set DEBUG to True if there's an environment variable called DEVELOPMENT, and set it to False otherwise.
+DEBUG = os.environ.get('DEVELOPMENT', True)
+This line says if there is an environment variable called DEVELOPMENT, set DEBUG to its value (in this case, it would be a string saying "True").
+If there isn't an environment variable called DEVELOPMENT, then set the value to the second param, which is True in this case.
+Could you run this command in your terminal:
+echo $DEVELOPMENT
+'''
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'DEVELOPMENT' in os.environ
+# DEBUG = os.environ.get('DEVELOPMENT', True)
 
 ALLOWED_HOSTS = ['tom-nagy-boutique-ado.herokuapp.com', 'localhost']
 
@@ -205,9 +215,10 @@ if 'USE_AWS' in os.environ:
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/'
 
 # Variable to calculate delivery costs
-#  stripe
 FREE_DELIVERY_THRESHOLD = 50
 STANDARD_DELIVERY_PERCENTAGE = 10
+
+#  stripe set up
 STRIPE_CURRENCY = 'usd'
 STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY', '')
 STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY', '')
