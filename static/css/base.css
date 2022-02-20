@@ -246,6 +246,11 @@ input[name='q']::placeholder {
     overflow: hidden;
 }
 
+/* 
+style the span that wrap the input like a button
+and make the input field that lives in it not visible so that 
+when we click on the btn we actually click the input
+*/
 .btn-file input[type="file"] {
     position: absolute;
     top: 0;
